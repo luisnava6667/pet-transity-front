@@ -5,22 +5,22 @@ import donar from "../../assets/donar.svg";
 
 const NavBarLogin = () => {
   return (
-    <header class="bg-[#FCF5F5]">
-      <div class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
+    <header class="w-full bg-[#ccc4bb]">
+      <div class="mx-auto py-14 bg-[#ccc4bb] flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
         <div class="flex flex-1 items-center justify-end md:justify-between">
           <a class="block text-teal-600" href="/">
-            <Image className="" width={250} height={30} alt="logo" src={logo} />
+            <Image className="" width={427} height={90} alt="logo" src={logo} />
           </a>
           <div class="flex items-center gap-4">
-            <div class="sm:flex sm:gap-4">
+            <div class="sm:flex sm:gap-4 px-auto">
               <a
-                class="block rounded-md bg-[#5AC095] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
+                class="flex rounded-md bg-[#106CB0] px-5 py-2.5 text-3xl justify-around font-medium text-white transition hover:bg-teal-700 w-44 h-14"
                 href="/"
               >
                 <Image
                   className=""
-                  width={25}
-                  height={25}
+                  width={50}
+                  height={50}
                   alt="logo"
                   src={donar}
                 />
