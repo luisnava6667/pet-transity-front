@@ -2,14 +2,16 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
+import SwitchUsuarioRefugio from "@/app/components/SwitchUsuarioRefugio";
 
 const UserFormLogin = () => {
-  const [selectedButton, setSelectedButton] = useState("refugio"); // Inicialmente, el botón "Ingresar" está seleccionado
+  const [selectedButton, setSelectedButton] = useState("refugio");
 
   const handleButtonClick = (button) => {
     setSelectedButton(button);
   };
 
+  console.log(selectedButton);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,7 +29,10 @@ const UserFormLogin = () => {
       console.log(values);
 
       axios
-        .post(`https://api-pet-beak.onrender.com/usuarios/login`, values)
+        .post(
+          `https://giant-jersey-colt.cyclic.app/${selectedButton}/login`,
+          values
+        )
         .then((res) => {
           console.log(res.data);
         })
@@ -52,31 +57,10 @@ const UserFormLogin = () => {
         <h2 class=" text-center text-6xl font-bold leading-9 tracking-tight text-[#6F4C48]">
           INICIAR SESIÓN
         </h2>
-
-        <div className="w-[25rem] mt-5 flex justify-center items-center">
-          <button
-            type="submit"
-            className={`flex w-96 h-14 lg:text-2xl items-center border-2 border-[#4F3300] justify-center rounded-l-xl ${
-              selectedButton === "refugio"
-                ? "bg-[#E59D1C] text-white"
-                : "bg-[#ccc4bb] text-[#303030]"
-            } px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-            onClick={() => handleButtonClick("refugio")}
-          >
-            Refugio
-          </button>
-          <button
-            type="submit"
-            className={`flex w-96 h-14 text-center items-center border-2 border-[#4F3300] justify-center rounded-r-xl ${
-              selectedButton === "usuario"
-                ? "bg-[#E59D1C] text-white"
-                : "bg-[#ccc4bb] text-[#303030]"
-            } px-3 py-1.5 text-sm lg:text-2xl font-semibold leading-6 shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
-            onClick={() => handleButtonClick("usuario")}
-          >
-            Usuario
-          </button>
-        </div>
+        <SwitchUsuarioRefugio
+          selectedButton={selectedButton}
+          handleButtonClick={handleButtonClick}
+        />
       </div>
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -160,13 +144,13 @@ const UserFormLogin = () => {
           <div className="w-[25rem] flex flex-col items-center ">
             <button
               type="submit"
-              class="flex w-96 h-14 lg:text-2xl items-center justify-center rounded-md bg-[#E59D1C] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              class="flex w-96 h-14 lg:text-2xl items-center justify-center rounded-md bg-[#E59D1C] px-3 py-1.5 text-sm font-semibold leading-6 text-[#4F3300]  shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Ingresar
             </button>
             <button
               type="submit"
-              class="flex mt-4 w-96 h-14 text-center items-center  border-2 border-[#4F3300] justify-center rounded-md bg-[#ccc4bb] px-3 py-1.5 text-sm lg:text-2xl font-semibold leading-6 text-[#303030] shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              class="flex mt-4 w-96 h-14 text-center items-center  border-2 border-[#4F3300] justify-center rounded-md bg-[#ccc4bb] px-3 py-1.5 text-sm lg:text-2xl font-semibold leading-6 text-[#4F3300]  shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Registrarse
             </button>
