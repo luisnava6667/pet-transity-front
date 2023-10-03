@@ -59,7 +59,7 @@ const FormRegister = ({ selectedButton }) => {
           >
             Razón Social <span className="text-red-600">*</span>
           </label>
-          <div class="mt-2 w-full">
+          <div className="mt-2 w-full">
             <input
               id="correo"
               name="email"
@@ -69,7 +69,7 @@ const FormRegister = ({ selectedButton }) => {
               autocomplete="correo"
               required
               placeholder="Correo electrónico"
-              class={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+              className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.email && errors.email
                   ? "ring-red-500  focus:ring-red-500"
                   : "ring-gray-300 placeholder-text-gray-400 focus:ring-indigo-600"
@@ -84,10 +84,10 @@ const FormRegister = ({ selectedButton }) => {
         </div>
 
         <div>
-          <div class="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <label
               for="password"
-              class="block text-sm font-medium leading-6 text-gray-900"
+              className="block text-sm font-medium leading-6 text-gray-900"
             >
               Cuit <span className="text-red-600">*</span>
             </label>
@@ -102,7 +102,7 @@ const FormRegister = ({ selectedButton }) => {
               autocomplete="current-password"
               placeholder="**********"
               required
-              class={`block w-60 h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+              className={`block w-60 h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.password && errors.password
                   ? "ring-red-500  focus:ring-red-500"
                   : "ring-gray-300 placeholder-text-gray-400 focus:ring-indigo-600"

@@ -7,7 +7,7 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({})
   const [cargando, setCargando] = useState(true)
   useEffect(() => {
-    const autenticarUserio = async () => {
+    const autenticarUsuario = async () => {
       const token = localStorage.getItem('token')
       if (!token) {
         setCargando(false)
@@ -26,8 +26,23 @@ const AuthProvider = ({ children }) => {
         setAuth({})
       }
     }
+    autenticarUsuario()
   }, [])
-  return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>
+  const cerrarSesionAuth = () => {
+    setAuth({})
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{
+        auth,
+        setAuth,
+        cargando,
+        cerrarSesionAuth
+      }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 export { AuthProvider }
 
