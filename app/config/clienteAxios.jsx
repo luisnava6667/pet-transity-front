@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const clienteAxios = axios.create({
-  baseURL: `https://giant-jersey-colt.cyclic.app/`
+  baseURL: `https://api-pet-beak.onrender.com/`
 })
 
 export default clienteAxios
