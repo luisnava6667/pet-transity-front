@@ -1,38 +1,35 @@
 import Image from "next/image";
 import React from "react";
 import logo from "../../assets/logo.svg";
-import donar from "../../assets/donar.svg";
+import Link from "next/link";
 
-const NavBarLogin = () => {
+const NavBarLogin = ({ textButtonNav, imgButton, styles, ruta }) => {
   return (
-    <header class="w-full bg-[#ccc4bb]">
-      <div class="mx-auto py-14 bg-[#ccc4bb] flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-1 items-center justify-end md:justify-between">
-          <a class="block text-teal-600" href="/">
+    <header className="w-full bg-[#ccc4bb]">
+      <div className="mx-auto py-14 bg-[#ccc4bb] flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-1 items-center justify-end md:justify-between">
+          <Link className="block text-teal-600" href="/">
             <Image className="" width={427} height={90} alt="logo" src={logo} />
-          </a>
-          <div class="flex items-center gap-4">
-            <div class="sm:flex sm:gap-4 px-auto">
-              <a
-                class="flex rounded-md bg-[#106CB0] px-5 py-2.5 text-3xl justify-around font-medium text-white transition hover:bg-teal-700 w-44 h-14"
-                href="/"
-              >
+          </Link>
+          <div className="flex items-center gap-4">
+            <div className="sm:flex sm:gap-4 px-auto">
+              <Link className={styles} href={`${ruta}`}>
                 <Image
                   className=""
                   width={50}
                   height={50}
                   alt="logo"
-                  src={donar}
+                  src={imgButton}
                 />
-                Donar
-              </a>
+                {textButtonNav}
+              </Link>
             </div>
 
-            <button class="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden">
-              <span class="sr-only">Toggle menu</span>
+            <button className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden">
+              <span className="sr-only">Toggle menu</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
+                className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
