@@ -5,8 +5,15 @@ import canUsuario from "@/assets/canUsuario.svg";
 import canRefugio from "@/assets/canRefugio.svg";
 import flecha from "@/assets/flechaNav.svg";
 import Link from "next/link";
+import SwitchUsuarioRefugio from "../components/SwitchUsuarioRefugio";
+import { useState } from "react";
 
 const Page = () => {
+  const [selectedButton, setSelectedButton] = useState("refugio");
+
+  const handleButtonClick = (button) => {
+    setSelectedButton(button);
+  };
   return (
     <>
       <NavBarLogin
@@ -21,6 +28,10 @@ const Page = () => {
         <p className="text-5xl font-bold text-[#6F4C48] mt-12">
           REGISTRARME COMO:
         </p>
+        <SwitchUsuarioRefugio
+          selectedButton={selectedButton}
+          handleButtonClick={handleButtonClick}
+        />
         <div className="flex min-h-screen justify-around mt-12 rounded-full ">
           <div className="flex flex-col items-center ">
             <Link
