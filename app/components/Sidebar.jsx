@@ -17,8 +17,8 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <header className="w-80 h-screen bg-[#6F4C48]">
-      <div className="mx-auto py-14 bg-[#6F4C48] h-screen flex items-center gap-8 px-4 sm:px-6 lg:px-8 rounded-r-lg rounded-br-lg  shadow-[4px_0_6px_0] shadow-[#483938]">
+    <header className="w-80  bg-[#6F4C48]">
+      <div className="mx-auto  bg-[#6F4C48] h-full flex items-center gap-8 px-4 sm:px-6 lg:px-8 rounded-r-lg rounded-br-lg  shadow-[4px_0_6px_0] shadow-[#483938]">
         <div className="flex flex-1 flex-col items-center  md:justify-between ">
           <Link className="block text-teal-600" href="/dashboard">
             <Image
