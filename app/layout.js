@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { AuthProvider } from './context/AuthContext'
 import { PetProvider } from './context/PetContext'
 import './globals.css'
@@ -15,6 +16,13 @@ export default function RootLayout({ children }) {
     <AuthProvider>
       <PetProvider>
         <html lang='en'>
+          <Head>
+            <script
+              async
+              defer
+              src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
+            />
+          </Head>
           <body className={inter.className}>{children}</body>
         </html>
       </PetProvider>

@@ -83,7 +83,7 @@ const UserFormLogin = () => {
                 type='email'
                 required
                 placeholder='Correo electrónico'
-                class={`block w-[25rem] h-12 p-2 rounded-md py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
+                className={`block w-[25rem] h-12 p-2 rounded-md py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                   touched.email && errors.email
                     ? 'ring-red-500  focus:ring-red-500'
                     : 'ring-gray-300 placeholder-text-gray-400 focus:ring-indigo-600'

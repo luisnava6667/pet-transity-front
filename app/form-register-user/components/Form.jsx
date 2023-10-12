@@ -44,7 +44,7 @@ const Form = () => {
         ),
       password2: Yup.string()
         .oneOf(
-          [Yup.ref('password'), undefined],
+          // [Yup.ref('password'), undefined],
           'Las contraseñas deben coincidir'
         )
         .required('contraseña requerida'),
