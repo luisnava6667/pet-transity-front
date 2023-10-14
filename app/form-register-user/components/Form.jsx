@@ -44,7 +44,7 @@ const Form = () => {
         ),
       password2: Yup.string()
         .oneOf(
-          [Yup.ref('password'), undefined],
+          // [Yup.ref('password'), undefined],
           'Las contraseñas deben coincidir'
         )
         .required('contraseña requerida'),
@@ -65,7 +65,7 @@ const Form = () => {
       console.log(values)
 
       axios
-        .post(`https://api-pet-beak.onrender.com/usuarios`, values)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/usuarios`, values)
         .then((res) => {
           console.log(res.data)
         })

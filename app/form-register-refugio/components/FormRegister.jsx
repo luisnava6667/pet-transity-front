@@ -6,8 +6,15 @@ import name from '@/assets/name.svg'
 import mail from '@/assets/mail.svg'
 import lock from '@/assets/lock.svg'
 import Image from 'next/image'
+import MapComponent from '@/app/components/MapComponent'
+import { useState } from 'react'
+import LocationAutocomplete from '@/app/components/LocationAutocomplete'
 
 const FormRegister = () => {
+  const [coordinates, setCoordinates] = useState({
+    lat: -34.603838,
+    lng: -58.381597
+  }) // -34.603838, -58.381597
   const formik = useFormik({
     initialValues: {
       nombre: '',
@@ -68,7 +75,7 @@ const FormRegister = () => {
       console.log(values)
 
       axios
-        .post(`https://api-pet-beak.onrender.com/refugio`, values)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/refugio`, values)
         .then((res) => {
           console.log(res.data)
         })
@@ -89,7 +96,6 @@ const FormRegister = () => {
   return (
     <div className='flex flex-col items-center  max-h-screen  overflow-y-auto bg-[#CCC4BB]'>
       <p className='text-6xl font-bold text-[#6F4C48] mb-10'>Refugio</p>
-
       <form
         className='bg-[#C1A88D] px-20 pt-5 space-y-6 pb-10 rounded-3xl '
         onKeyDown={handleKeyDown}
@@ -98,6 +104,10 @@ const FormRegister = () => {
           {' '}
           Información de la cuenta
         </p>
+        <div>
+          <LocationAutocomplete setCoordinates={setCoordinates} />
+          <MapComponent coordinates={coordinates} />
+        </div>
         <div className=''>
           <div className='flex gap-1 my-1'>
             <Image alt='icono de etiqueta nombre' src={name} />
@@ -243,7 +253,7 @@ const FormRegister = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type='email'
-              autocomplete='email'
+              autoComplete='email'
               placeholder='Correo'
               required
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
@@ -279,6 +289,7 @@ const FormRegister = () => {
               type='password'
               placeholder='**********'
               required
+              autoComplete='new-password'
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.password && errors.password
                   ? 'ring-red-500  focus:ring-red-500'
@@ -311,6 +322,7 @@ const FormRegister = () => {
               onBlur={handleBlur}
               type='password'
               placeholder='**********'
+              autoComplete='new-password'
               required
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.password2 && errors.password2
@@ -525,7 +537,7 @@ const FormRegister = () => {
               Código Postal <span className='text-red-600'>*</span>
             </label>
           </div>
-          <div class='mt-2'>
+          <div className='mt-2'>
             <input
               id='codigoPostal'
               name='codigoPostal'
@@ -589,7 +601,7 @@ const FormRegister = () => {
               Télefono <span className='text-red-600'>*</span>
             </label>
           </div>
-          <div class='mt-2'>
+          <div className='mt-2'>
             <input
               id='whatsApp'
               name='whatsApp'
@@ -711,7 +723,7 @@ const FormRegister = () => {
               Instagram
             </label>
           </div>
-          <div class='mt-2'>
+          <div className='mt-2'>
             <input
               id='instagram'
               name='instagram'

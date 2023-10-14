@@ -69,6 +69,7 @@ const FormRegisterUser = () => {
 
       axios
         .post(`https://api-pet-beak.onrender.com/${selectedButton}`, values)
+
         .then((res) => {
           console.log(res.data);
         })
