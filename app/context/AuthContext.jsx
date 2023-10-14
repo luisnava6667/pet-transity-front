@@ -1,11 +1,13 @@
 'use client'
 import { createContext, useState, useEffect } from 'react'
 import clienteAxios from '../config/clienteAxios'
+import { useRouter } from 'next/navigation'
 
 const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({})
   const [cargando, setCargando] = useState(true)
+  const router = useRouter()
   useEffect(() => {
     const autenticarUsuario = async () => {
       const token = localStorage.getItem('token')
@@ -22,6 +24,8 @@ const AuthProvider = ({ children }) => {
       try {
         const { data } = await clienteAxios.get('/usuario/perfil', config)
         setAuth(data)
+        setCargando(false)
+        // router.push('/dashboard')
       } catch (error) {
         setAuth({})
       }

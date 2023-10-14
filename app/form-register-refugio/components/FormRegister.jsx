@@ -75,7 +75,7 @@ const FormRegister = () => {
       console.log(values)
 
       axios
-        .post(`https://api-pet-beak.onrender.com/refugio`, values)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/refugio`, values)
         .then((res) => {
           console.log(res.data)
         })

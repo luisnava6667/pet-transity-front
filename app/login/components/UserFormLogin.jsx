@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import SwitchUsuarioRefugio from '@/app/components/SwitchUsuarioRefugio'
+import AuthContext from '@/app/context/AuthContext'
 
 const UserFormLogin = () => {
   const [selectedButton, setSelectedButton] = useState('refugio')
-
+  const { setAuth } = useContext(AuthContext)
   const handleButtonClick = (button) => {
     setSelectedButton(button)
   }
@@ -30,11 +31,12 @@ const UserFormLogin = () => {
 
       axios
         .post(
-          `https://api-pet-beak.onrender.com/${selectedButton}/login`,
+          `${process.env.NEXT_PUBLIC_API_URL}/${selectedButton}/login`,
           values
         )
-        .then((res) => {
-          console.log(res.data)
+        .then(({ data }) => {
+          localStorage.setItem('token', data.token)
+          setAuth(data)
         })
         .catch((err) => {
           console.log(err)
