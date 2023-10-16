@@ -7,6 +7,7 @@ const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({})
   const [cargando, setCargando] = useState(true)
+  const [cuentaConfirmada, setCuentaConfirmada] = useState(false)
   const router = useRouter()
   useEffect(() => {
     const autenticarUsuario = async () => {
@@ -42,7 +43,9 @@ const AuthProvider = ({ children }) => {
         auth,
         setAuth,
         cargando,
-        cerrarSesionAuth
+        cerrarSesionAuth,
+        cuentaConfirmada,
+        setCuentaConfirmada
       }}>
       {children}
     </AuthContext.Provider>

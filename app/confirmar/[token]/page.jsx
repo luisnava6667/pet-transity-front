@@ -6,46 +6,38 @@ import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 
 export default function Page({ params }) {
-  const [token, setToken] = useState(params.token)
-  const [cuentaConfirmada, setCuentaConfirmada] = useState(false)
-
+  const { token } = params
+  const { cuentaConfirmada, setCuentaConfirmada } = useContext(AuthContext)
   useEffect(() => {
     const confirmarCuenta = async () => {
       try {
-        const url = `/usuarios/confirmar/${params.token}`
-        const { data } = await clienteAxios(url)
+        const url = `/confirm/${token}`
+        await clienteAxios(url)
         setCuentaConfirmada(true)
       } catch (error) {
-        console.log(error)
+        setCuentaConfirmada(false)
       }
     }
     confirmarCuenta()
   }, [])
-  console.log(params.token)
+
   return (
     <main className='bg-[#CCC4BB] h-screen p-10'>
       <div className='grid justify-center  justify-items-center gap-24'>
-        <h2 className='text-white text-4xl uppercase'>
-          Gracias por confirmar tu cuenta{' '}
-        </h2>
-
         <div className='mt-20 md:mt-10 shadow-lg px-5 py-10 rounded-xl bg-white'>
-          {cuentaConfirmada ? (
-            <Link
-              className='block text-center my-5 text-slate-500 uppercase text-sm'
-              href='/login'>
-              Inicia Sesión
-            </Link>
-          ) : (
-            <div>
-              <p className='text-center my-5 text-slate-500 uppercase text-sm'>
-                Ingresaste un token inválido
-              </p>
-              <Link
-                className='block text-center my-5 text-slate-500 uppercase text-sm'
-                href='/'>
-                Regresar al inicio
-              </Link>
+          {cuentaConfirmada && (
+            <div className='text-center'>
+              <h2>
+                Confirma tu cuenta y comienza a administrar tu{' '}
+                <span>Negocio</span>
+              </h2>
+              <p className='text-2xl font-bold'>Cuenta confirmada</p>
+              <p className='text-xl'>Ahora puedes iniciar sesión</p>
+              <button
+                className='bg-sky-400 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded mt-5'
+                onClick={() => push('/login')}>
+                Iniciar Sesión
+              </button>
             </div>
           )}
         </div>
