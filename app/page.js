@@ -10,17 +10,8 @@ export default function Home() {
           <Image className='' width={427} height={90} alt='logo' src={logo} />
         </Link>
         <div className='flex items-center gap-4'>
-          <div className='sm:flex sm:gap-4 px-auto'>
-            <Link className={``} href=''>
-              <Image className='' width={50} height={50} alt='logo' src={``} />
-              {``}
-            </Link>
-          </div>
-
-          <button className='block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden'>
-            <span className='sr-only'>Toggle menu</span>
-           
-          </button>
+          <Link href='/login'>Login</Link>
+          <Link href='/donar'>Donar</Link>
         </div>
       </div>
       <div>

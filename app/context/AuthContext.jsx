@@ -26,7 +26,6 @@ const AuthProvider = ({ children }) => {
         const { data } = await clienteAxios.get('/usuario/perfil', config)
         setAuth(data)
         setCargando(false)
-        // router.push('/dashboard')
       } catch (error) {
         setAuth({})
       }
@@ -35,6 +34,8 @@ const AuthProvider = ({ children }) => {
   }, [])
   const cerrarSesionAuth = () => {
     setAuth({})
+    localStorage.removeItem('token')
+    router.push('/login')
   }
 
   return (

@@ -4,10 +4,12 @@ import * as Yup from 'yup'
 import { useContext, useState } from 'react'
 import SwitchUsuarioRefugio from '@/app/components/SwitchUsuarioRefugio'
 import AuthContext from '@/app/context/AuthContext'
+import { useRouter } from 'next/navigation'
 
 const UserFormLogin = () => {
   const [selectedButton, setSelectedButton] = useState('refugio')
   const { setAuth } = useContext(AuthContext)
+  const route = useRouter()
   const handleButtonClick = (button) => {
     setSelectedButton(button)
   }
@@ -36,6 +38,7 @@ const UserFormLogin = () => {
         )
         .then(({ data }) => {
           localStorage.setItem('token', data.token)
+          route.push('/dashboard')
           setAuth(data)
         })
         .catch((err) => {
