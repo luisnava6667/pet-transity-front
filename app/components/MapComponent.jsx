@@ -24,7 +24,11 @@ const MapComponent = ({ coordinates }) => {
         center={coordinates}
         options={mapOptions} // Pasar las opciones de configuración del mapa
       >
-        <MarkerF position={coordinates} />
+        <MarkerF position={coordinates} 
+          //el title debe de
+          // ser el nombre del refugio
+        
+        />
       </GoogleMap>
     </LoadScript>
   )

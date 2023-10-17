@@ -6,15 +6,8 @@ import name from '@/assets/name.svg'
 import mail from '@/assets/mail.svg'
 import lock from '@/assets/lock.svg'
 import Image from 'next/image'
-import MapComponent from '@/app/components/MapComponent'
-import { useState } from 'react'
-import LocationAutocomplete from '@/app/components/LocationAutocomplete'
 
 const FormRegister = () => {
-  const [coordinates, setCoordinates] = useState({
-    lat: -34.603838,
-    lng: -58.381597
-  }) // -34.603838, -58.381597
   const formik = useFormik({
     initialValues: {
       nombre: '',
@@ -104,10 +97,7 @@ const FormRegister = () => {
           {' '}
           Información de la cuenta
         </p>
-        <div>
-          <LocationAutocomplete setCoordinates={setCoordinates} />
-          <MapComponent coordinates={coordinates} />
-        </div>
+
         <div className=''>
           <div className='flex gap-1 my-1'>
             <Image alt='icono de etiqueta nombre' src={name} />

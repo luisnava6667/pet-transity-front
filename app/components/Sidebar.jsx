@@ -22,7 +22,7 @@ const Navbar = () => {
     cerrarSesionAuth()
   }
   return (
-    <header className='w-80  bg-[#6F4C48]'>
+    <header className='w-80 h-screen bg-[#6F4C48]'>
       <div className='mx-auto  bg-[#6F4C48] h-full flex items-center gap-8 px-4 sm:px-6 lg:px-8 rounded-r-lg rounded-br-lg  shadow-[4px_0_6px_0] shadow-[#483938]'>
         <div className='flex flex-1 flex-col items-center  md:justify-between '>
           <Link className='block text-teal-600' href='/dashboard'>
@@ -66,7 +66,7 @@ const Navbar = () => {
                     ? ' text-[#E59D1C]  text-3xl font-semibold'
                     : 'text-white text-3xl font-semibold'
                 }`}
-                href=''>
+                href='/mapa'>
                 <Image
                   className=' '
                   width={26}
@@ -139,10 +139,10 @@ const Navbar = () => {
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
-                stroke-width='2'>
+                strokeWidth='2'>
                 <path
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
                   d='M4 6h16M4 12h16M4 18h16'
                 />
               </svg>
