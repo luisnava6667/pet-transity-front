@@ -34,7 +34,8 @@ const UserFormLogin = () => {
       axios
         .post(
           `${process.env.NEXT_PUBLIC_API_URL}/${selectedButton}/login`,
-          values
+          values,
+          console.log(values)
         )
         .then(({ data }) => {
           localStorage.setItem('token', data.token)
