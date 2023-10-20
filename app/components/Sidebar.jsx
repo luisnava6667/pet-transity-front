@@ -14,6 +14,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import AuthContext from '../context/AuthContext'
 import { useContext } from 'react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 const Navbar = () => {
   const { cerrarSesionAuth } = useContext(AuthContext)
@@ -125,7 +126,7 @@ const Navbar = () => {
 
           <div className='sm:flex sm:gap-4 px-auto'>
             <button
-              onClick={handleCerrarSesion}
+              onClick={() => signOut()}
               className='flex items-center rounded-md bg-[#E59D1C] px-5 py-2.5 text-xl justify-around font-semibold text-black transition w-64  h-16 shadow-md'>
               Cerrar sesión
             </button>

@@ -65,7 +65,7 @@ const Form = () => {
       console.log(values)
 
       axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/usuarios`, values)
+        .post(`${process.env.NEXT_PUBLIC_URL}/usuarios`, values)
         .then((res) => {
           console.log(res.data)
         })

@@ -5,6 +5,7 @@ import { useContext, useState } from 'react'
 import SwitchUsuarioRefugio from '@/app/components/SwitchUsuarioRefugio'
 import AuthContext from '@/app/context/AuthContext'
 import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 
 const UserFormLogin = () => {
   const [selectedButton, setSelectedButton] = useState('refugio')
@@ -14,7 +15,7 @@ const UserFormLogin = () => {
     setSelectedButton(button)
   }
 
-  console.log(selectedButton)
+  // console.log(selectedButton)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -28,23 +29,33 @@ const UserFormLogin = () => {
         .required('La contraseña es requerida')
         .min(3, 'La contraseña debe tener al menos 3 caracteres')
     }),
-    onSubmit: (values) => {
-      console.log(values)
+    onSubmit: async (values) => {
+      try {
+        const responseNextAuth = await signIn('credentials', {
+          email: values.email,
+          password: values.password,
+          redirect: false
+        })
+        console.log(responseNextAuth)
+        if (responseNextAuth.error) {
+          console.log(responseNextAuth.error)
+          return
+        }
+        route.push('/dashboard')
+      } catch (error) {
+        console.log(error)
+      }
+      // console.log(values)
 
-      axios
-        .post(
-          `${process.env.NEXT_PUBLIC_API_URL}/${selectedButton}/login`,
-          values,
-          console.log(values)
-        )
-        .then(({ data }) => {
-          localStorage.setItem('token', data.token)
-          route.push('/dashboard')
-          setAuth(data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      // axios
+      //   .post(`${process.env.NEXT_PUBLIC_URL}/${selectedButton}/login`, values)
+      //   .then(({ data }) => {
+      //     localStorage.setItem('token', data.token)
+      //     setAuth(data)
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
     }
   })
 

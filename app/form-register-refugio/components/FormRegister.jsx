@@ -68,7 +68,7 @@ const FormRegister = () => {
       console.log(values)
 
       axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/refugio`, values)
+        .post(`${process.env.NEXT_PUBLIC_URL}/refugio`, values)
         .then((res) => {
           console.log(res.data)
         })

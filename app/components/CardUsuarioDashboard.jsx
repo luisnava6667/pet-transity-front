@@ -11,7 +11,7 @@ const CardUsuarioDashboard = () => {
         <div className="flex justify-center w-72 h-20 bg-[#6F4C48] rounded-tl-2xl rounded-tr-2xl ">
           <Image
             className="absolute mt-6  "
-            alt=""
+            alt="1"
             src={usuarioFake}
             width={91}
             height={91}
@@ -24,7 +24,7 @@ const CardUsuarioDashboard = () => {
           <div className="flex w-48 gap-1 my-1">
             <Image
               className=" "
-              alt=""
+              alt="1"
               src={ubicacionCard}
               width={20}
               height={20}
@@ -32,7 +32,7 @@ const CardUsuarioDashboard = () => {
             <p className="text-base font-medium">Dirección</p>
           </div>
           <div className="flex w-48 gap-1 my-1">
-            <Image className=" " alt="" src={telCard} width={20} height={20} />
+            <Image className=" " alt="1" src={telCard} width={20} height={20} />
             <p className="text-base font-medium">Teléfono</p>
           </div>
           <div className="flex w-48 gap-1 my-1">

@@ -13,6 +13,7 @@
     "axios": "^1.5.1",
     "formik": "^2.4.5",
     "next": "latest",
+    "next-auth": "^4.24.3",
     "react": "latest",
     "react-dom": "latest",
     "react-geocode": "^1.0.0-alpha.1",
