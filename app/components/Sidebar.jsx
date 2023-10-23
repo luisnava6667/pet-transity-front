@@ -12,12 +12,10 @@ import perfil from '@/assets/perfil.svg'
 import homeText from '@/assets/homeTextoNav.svg'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import AuthContext from '../context/AuthContext'
-import { useContext } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 const Navbar = () => {
-  const { cerrarSesionAuth } = useContext(AuthContext)
+
   const pathname = usePathname()
   const handleCerrarSesion = () => {
     cerrarSesionAuth()
@@ -46,7 +44,7 @@ const Navbar = () => {
                     ? ' text-[#E59D1C]  text-3xl font-semibold'
                     : 'text-white text-3xl font-semibold'
                 }`}
-                href='#'>
+                href='/dashboard'>
                 <Image
                   className=''
                   width={26}
@@ -59,11 +57,11 @@ const Navbar = () => {
             </div>
             <div
               className={`${
-                pathname === '/dashboard/mapa' && 'bg-[#5E413D] rounded-xl'
+                pathname === '/mapa' && 'bg-[#5E413D] rounded-xl'
               } sm:flex sm:gap-4 pl-3 px-auto sm:h-[5.38rem]`}>
               <Link
                 className={`flex items-center gap-6 ${
-                  pathname === '/dashboard/mapa'
+                  pathname === '/mapa'
                     ? ' text-[#E59D1C]  text-3xl font-semibold'
                     : 'text-white text-3xl font-semibold'
                 }`}
@@ -80,7 +78,7 @@ const Navbar = () => {
             </div>
             <div
               className={`${
-                pathname === '/dashboard/animales' && 'bg-[#5E413D] rounded-xl'
+                pathname === '/animales' && 'bg-[#5E413D] rounded-xl'
               } sm:flex sm:gap-4 pl-3 px-auto sm:h-[5.38rem]`}>
               <Link
                 className={`flex items-center gap-6 ${
@@ -95,7 +93,7 @@ const Navbar = () => {
                   height={24}
                   alt='icono de animales'
                   src={
-                    pathname === '/dashboard/animales' ? huellaOrange : huella
+                    pathname === '/animales' ? huellaOrange : huella
                   }
                 />
                 Animales
@@ -103,15 +101,15 @@ const Navbar = () => {
             </div>
             <div
               className={`${
-                pathname === '/dashboard/perfil' && 'bg-[#5E413D] rounded-xl'
+                pathname === '/perfil' && 'bg-[#5E413D] rounded-xl'
               } sm:flex sm:gap-4 pl-3 px-auto sm:h-[5.38rem]`}>
               <Link
                 className={`flex items-center gap-6 ${
-                  pathname === '/dashboard/perfil'
+                  pathname === '/perfil'
                     ? ' text-[#E59D1C]  text-3xl font-semibold'
                     : 'text-white text-3xl font-semibold'
                 }`}
-                href='/'>
+                href='/perfil'>
                 <Image
                   className=' '
                   width={26}

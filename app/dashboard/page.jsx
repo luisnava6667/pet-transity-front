@@ -4,9 +4,12 @@ import CardUsuarioDashboard from '../components/CardUsuarioDashboard'
 import InformacionCasaDashboard from '../components/InformacionCasaDashboard'
 import Sidebar from '../components/Sidebar'
 import TopBar from '../components/TopBar'
-import { useSession } from 'next-auth/react'
+import { SessionProvider, useSession } from 'next-auth/react'
+import SessionAuthProvider from '../context/SessionAuthProvider'
+
 const Page = () => {
-  const { data, status,token } = useSession()
+  const { status } = useSession()
+
   if (status === 'loading') {
     return <div>Cargando...</div>
   }

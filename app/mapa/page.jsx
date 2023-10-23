@@ -16,7 +16,6 @@ import Image from 'next/image'
 const Page = () => {
   const apiKey = `${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
   const { refugios } = useRefugio()
-  console.log(refugios)
   const [locations, setLocations] = useState([])
   const direccion = refugios.map(
     (refugio) => refugio.direccion + ',' + refugio.provincia

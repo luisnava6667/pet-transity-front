@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import RefugioCredentialsProvider from 'next-auth/providers/credentials'
 
 const handler = NextAuth({
   providers: [
@@ -15,7 +16,7 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_URL}/usuarios/login`,
+          `${process.env.NEXT_PUBLIC_URL}/${credentials.refOrUser}/login`,
           {
             method: 'POST',
             body: JSON.stringify({
@@ -26,7 +27,10 @@ const handler = NextAuth({
           }
         )
         const user = await res.json()
-        if (user.error) throw user
+        if (user.msg) {
+          const error = user.msg
+          throw new Error(error)
+        }
         return user
       }
     })

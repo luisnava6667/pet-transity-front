@@ -1,13 +1,11 @@
 'use client'
 
 import clienteAxios from '@/app/config/clienteAxios'
-import AuthContext from '@/app/context/AuthContext'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 
 export default function Page({ params }) {
   const { token } = params
-  const { cuentaConfirmada, setCuentaConfirmada } = useContext(AuthContext)
   useEffect(() => {
     const confirmarCuenta = async () => {
       try {

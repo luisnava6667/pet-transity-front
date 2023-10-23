@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { AuthProvider } from './context/AuthContext'
 import { PetProvider } from './context/PetContext'
 import { RefugioProvider } from './context/RefugioContext'
 import './globals.css'
@@ -15,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <AuthProvider>
+   
       <SessionAuthProvider>
         <RefugioProvider>
           <PetProvider>
@@ -32,6 +31,6 @@ export default function RootLayout({ children }) {
           </PetProvider>
         </RefugioProvider>
       </SessionAuthProvider>
-    </AuthProvider>
+   
   )
 }

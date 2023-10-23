@@ -4,8 +4,11 @@ import notificacion from '../../assets/notificacion.svg'
 import mensaje from '../../assets/mensaje.svg'
 import usuarioFake from '../../assets/usuarioFake.svg'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
 const TopBar = () => {
+  const { data } = useSession()
+
   return (
     <div className='mx-auto w-full py-14 bg-[#6F4C48] flex h-20  items-center gap-8 px-4 sm:px-6 lg:px-8'>
       <div className='flex flex-1 items-center justify-end md:justify-between'>
@@ -77,11 +80,11 @@ const TopBar = () => {
                 width={50}
                 height={50}
                 alt='usuarioFake'
-                src={usuarioFake}
+                src={data?.img}
               />
             </Link>
             <div className='text-white'>
-              <p>Marcos Fuentes</p>
+              <p>{data?.nombre}</p>
               <p>Estado</p>
             </div>
           </div>

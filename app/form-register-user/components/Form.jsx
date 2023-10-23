@@ -61,17 +61,22 @@ const Form = () => {
       desc_mascotas: Yup.string().required('unidad requerida'),
       estado_domicilio: Yup.string().required('unidad requerida')
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values)
-
-      axios
-        .post(`${process.env.NEXT_PUBLIC_URL}/usuarios`, values)
-        .then((res) => {
-          console.log(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+try {
+  const res = await axios.post(`${process.env.NEXT_PUBLIC_URL}/usuarios`, values)
+  console.log(res.data)
+} catch (error) {
+  console.log(error);
+}
+    //   axios
+    //     .post(`${process.env.NEXT_PUBLIC_URL}/usuarios`, values)
+    //     .then((res) => {
+    //       console.log(res.data)
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
     }
   })
 
