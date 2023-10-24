@@ -1,20 +1,19 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import SwitchUsuarioRefugio from '@/app/components/SwitchUsuarioRefugio'
-import AuthContext from '@/app/context/AuthContext'
 import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 
 const UserFormLogin = () => {
   const [selectedButton, setSelectedButton] = useState('refugio')
-  const { setAuth } = useContext(AuthContext)
+  const [error, setError] = useState(null)
   const route = useRouter()
   const handleButtonClick = (button) => {
     setSelectedButton(button)
   }
 
-  console.log(selectedButton)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -28,22 +27,25 @@ const UserFormLogin = () => {
         .required('La contraseña es requerida')
         .min(3, 'La contraseña debe tener al menos 3 caracteres')
     }),
-    onSubmit: (values) => {
-      console.log(values)
-
-      axios
-        .post(
-          `${process.env.NEXT_PUBLIC_API_URL}/${selectedButton}/login`,
-          values
-        )
-        .then(({ data }) => {
-          localStorage.setItem('token', data.token)
-          route.push('/dashboard')
-          setAuth(data)
+    onSubmit: async (values) => {
+      try {
+        const responseNextAuth = await signIn('credentials', {
+          email: values.email,
+          password: values.password,
+          redirect: false,
+          refOrUser: selectedButton
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        if (responseNextAuth.error) {
+          setError(responseNextAuth.error)
+          setTimeout(() => {
+            setError(null)
+          }, 5000)
+          return
+        }
+        route.push('/dashboard')
+      } catch (error) {
+        console.log(error)
+      }
     }
   })
 
@@ -53,7 +55,6 @@ const UserFormLogin = () => {
       handleSubmit()
     }
   }
-
   const { handleSubmit, handleChange, handleBlur, touched, errors } = formik
 
   return (
@@ -69,6 +70,11 @@ const UserFormLogin = () => {
       </div>
 
       <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+        {error && (
+          <div className='flex flex-row-reverse w-full bg-white sm:w-[13.5rem] mt-5 text-red-500 text-xs sm:text-sm'>
+            {error}
+          </div>
+        )}
         <form
           onKeyDown={handleKeyDown}
           onSubmit={handleSubmit}
@@ -134,7 +140,7 @@ const UserFormLogin = () => {
                 <a
                   href='#'
                   className='font-semibold underline text-[#6F4C48] hover:text-indigo-500'>
-                  ¿Olvido su contraseña?
+                  Olvidaste su contraseña?
                 </a>
               </div>
             </div>

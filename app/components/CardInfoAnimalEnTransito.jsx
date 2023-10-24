@@ -6,7 +6,7 @@ const CardInfoAnimalEnTransito = () => {
     <div className="flex flex-col ">
       <div className="bg-[#6F4C48] w-[28rem] h-64 rounded-tl-lg rounded-tr-lg flex">
         <div className="mt-2 ml-2 flex flex-col items-center w-40">
-          <Image src={coco} width={161} height={91} />
+          <Image alt="1" src={coco} width={161} height={91} />
           <div className="bg-[#B89C7C] w-36 h-6 rounded text-center font-bold -mt-3">
             COCO
           </div>

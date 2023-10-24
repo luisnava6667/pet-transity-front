@@ -6,8 +6,15 @@ import name from '@/assets/name.svg'
 import mail from '@/assets/mail.svg'
 import lock from '@/assets/lock.svg'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 const FormRegister = () => {
+  const [showPassword, setShowPassword] = useState(false)
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+  const required = 'Este campo es requerido'
   const formik = useFormik({
     initialValues: {
       nombre: '',
@@ -34,10 +41,17 @@ const FormRegister = () => {
     validationSchema: Yup.object({
       email: Yup.string()
         .email('Formato de email invalido')
-        .required('email requerido'),
+        .required('Email requerido'),
       password: Yup.string()
-        .required('contraseña requerida')
-        .min(8, 'ingresa 8 caracteres como mínimo')
+        .required(required)
+        .test(
+          'is-uppercase',
+          'Tienes las mayusculas activas',
+          function (value) {
+            return /^[A-Z]+$/.test(value)
+          }
+        )
+        .min(8, 'Ingresa 8 caracteres como mínimo')
         .matches(
           /[A-Z]/,
           'La contraseña debe contener al menos una letra mayúscula'
@@ -51,24 +65,22 @@ const FormRegister = () => {
           [Yup.ref('password'), undefined],
           'Las contraseñas deben coincidir'
         )
-        .required('contraseña requerida'),
-      nombre: Yup.string().required('nombre requerido'),
-      apellido: Yup.string().required('apellido requerido'),
-      departamento: Yup.string().required('Campo requerido'),
-      localidad: Yup.string().required('Campo requerido'),
-      whatsApp: Yup.string().required('telefono requerido'),
-      cuit: Yup.string().required('CUIT requerido'),
-      razon_social: Yup.string().required('Razón social requerida'),
-      estado_refugio: Yup.string().required('Estado del refugio requerido'),
-      direccion: Yup.string().required('direccion requerida'),
-      piso: Yup.string().required('piso requerida'),
-      unidad: Yup.string().required('unidad requerida')
+        .required(required),
+      nombre: Yup.string().required(required),
+      apellido: Yup.string().required(required),
+      departamento: Yup.string().required(required),
+      localidad: Yup.string().required(required),
+      whatsApp: Yup.string().required(required),
+      cuit: Yup.string().required(required),
+      razon_social: Yup.string().required(required),
+      estado_refugio: Yup.string().required(required),
+      direccion: Yup.string().required(required)
     }),
     onSubmit: (values) => {
       console.log(values)
 
       axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/refugio`, values)
+        .post(`${process.env.NEXT_PUBLIC_URL}/refugio`, values)
         .then((res) => {
           console.log(res.data)
         })
@@ -95,7 +107,7 @@ const FormRegister = () => {
         onSubmit={handleSubmit}>
         <p className='pb-10 underline underline-offset-2 text-[#6F4C48] text-2xl font-medium'>
           {' '}
-          Información de la cuenta
+          Cree su cuenta de PetTransity
         </p>
 
         <div className=''>
@@ -114,7 +126,6 @@ const FormRegister = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type='name'
-              required
               placeholder='Nombre'
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.nombre && errors.nombre
@@ -145,7 +156,6 @@ const FormRegister = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type='text'
-              required
               placeholder='Apellido'
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.apellido && errors.apellido
@@ -177,7 +187,6 @@ const FormRegister = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type='text'
-              required
               placeholder='Razón Social'
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.razon_social && errors.razon_social
@@ -211,7 +220,6 @@ const FormRegister = () => {
               onBlur={handleBlur}
               type='text'
               placeholder='Cuit'
-              required
               className={`block w-60 h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.cuit && errors.cuit
                   ? 'ring-red-500  focus:ring-red-500'
@@ -245,7 +253,6 @@ const FormRegister = () => {
               type='email'
               autoComplete='email'
               placeholder='Correo'
-              required
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.email && errors.email
                   ? 'ring-red-500  focus:ring-red-500'
@@ -270,22 +277,30 @@ const FormRegister = () => {
               </label>
             </div>
           </div>
-          <div className='mt-2'>
+          <div>
+            <p>Ingresa 8 caracteres como mínimo</p>
+            <p>La contraseña debe contener al menos una letra mayúscula</p>
+            <p>La contraseña debe contener al menos un caracter numérico</p>
+          </div>
+          <div className='mt-2 relative'>
             <input
               id='password'
               name='password'
               onChange={handleChange}
               onBlur={handleBlur}
-              type='password'
+              type={showPassword ? 'text' : 'password'}
               placeholder='**********'
-              required
-              autoComplete='new-password'
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.password && errors.password
                   ? 'ring-red-500  focus:ring-red-500'
                   : 'ring-gray-300 placeholder-text-gray-400 focus:ring-indigo-600'
-              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pr-12`} // Añadido pr-12 (padding-right) para dejar espacio para el botón
             />
+            <button
+              onClick={togglePasswordVisibility}
+              className='absolute right-3 top-1/4 transform -translate-y-2/4'>
+              {showPassword ? '👁️' : '👁️‍🗨️'}
+            </button>
             {touched.password && errors.password && (
               <div className='flex flex-row-reverse w-[11.5rem] sm:w-[13.5rem] mt-5 text-red-500 text-xs sm:text-sm'>
                 {errors.password}
@@ -313,7 +328,6 @@ const FormRegister = () => {
               type='password'
               placeholder='**********'
               autoComplete='new-password'
-              required
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.password2 && errors.password2
                   ? 'ring-red-500  focus:ring-red-500'
@@ -346,7 +360,6 @@ const FormRegister = () => {
               onBlur={handleBlur}
               type='text'
               placeholder='Dirección del Refugio'
-              required
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.direccion && errors.direccion
                   ? 'ring-red-500  focus:ring-red-500'
@@ -377,7 +390,6 @@ const FormRegister = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 type='text'
-                required
                 placeholder='Piso'
                 className={`block w-60 h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                   touched.piso && errors.piso
@@ -408,7 +420,6 @@ const FormRegister = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 type='text'
-                required
                 placeholder='Unidad'
                 className={`block w-60 h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                   touched.unidad && errors.unidad
@@ -434,21 +445,21 @@ const FormRegister = () => {
             </label>
           </div>
           <div className='mt-2'>
-            <input
+            <select
               id='provincia'
               name='provincia'
               onChange={handleChange}
               onBlur={handleBlur}
-              type='text'
-              required
               value='CABA'
-              placeholder='CABA'
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.provincia && errors.provincia
                   ? 'ring-red-500  focus:ring-red-500'
                   : 'ring-gray-300 placeholder-text-gray-400 focus:ring-indigo-600'
-              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-            />
+              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}>
+              <option value='CABA'>CABA</option>
+              <option value='Otra Provincia'>Otra Provincia</option>
+              {/* Agrega más opciones según tus necesidades */}
+            </select>
             {touched.provincia && errors.provincia && (
               <div className='flex flex-row-reverse w-[11.5rem] sm:w-[13.5rem] mt-5 text-red-500 text-xs sm:text-sm'>
                 {errors.provincia}
@@ -466,20 +477,37 @@ const FormRegister = () => {
             </label>
           </div>
           <div className='mt-2'>
-            <input
+            <select
               id='departamento'
               name='departamento'
               onChange={handleChange}
               onBlur={handleBlur}
               type='text'
-              required
               placeholder='Comuna'
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
-                touched.departamento && errors.departamento
+                touched.comuna && errors.comuna
                   ? 'ring-red-500  focus:ring-red-500'
                   : 'ring-gray-300 placeholder-text-gray-400 focus:ring-indigo-600'
-              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-            />
+              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}>
+              <option value='' disabled>
+                Selecciona una comuna
+              </option>
+              <option value='Comuna 1'>Comuna 1</option>
+              <option value='Comuna 2'>Comuna 2</option>
+              <option value='Comuna 3'>Comuna 3</option>
+              <option value='Comuna 4'>Comuna 4</option>
+              <option value='Comuna 5'>Comuna 5</option>
+              <option value='Comuna 6'>Comuna 6</option>
+              <option value='Comuna 7'>Comuna 7</option>
+              <option value='Comuna 8'>Comuna 8</option>
+              <option value='Comuna 9'>Comuna 9</option>
+              <option value='Comuna 10'>Comuna 10</option>
+              <option value='Comuna 11'>Comuna 11</option>
+              <option value='Comuna 12'>Comuna 12</option>
+              <option value='Comuna 13'>Comuna 13</option>
+              <option value='Comuna 14'>Comuna 14</option>
+              <option value='Comuna 15'>Comuna 15</option>
+            </select>
             {touched.departamento && errors.departamento && (
               <div className='flex flex-row-reverse w-[11.5rem] sm:w-[13.5rem] mt-5 text-red-500 text-xs sm:text-sm'>
                 {errors.departamento}
@@ -497,20 +525,68 @@ const FormRegister = () => {
             </label>
           </div>
           <div className='mt-2'>
-            <input
+            <select
               id='localidad'
               name='localidad'
               onChange={handleChange}
               onBlur={handleBlur}
-              type='text'
-              required
-              placeholder='Barrio'
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
-                touched.localidad && errors.localidad
+                touched.barrio && errors.barrio
                   ? 'ring-red-500  focus:ring-red-500'
                   : 'ring-gray-300 placeholder-text-gray-400 focus:ring-indigo-600'
-              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-            />
+              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}>
+              <option value='' disabled>
+                Selecciona un barrio
+              </option>
+              <option value='Agronomía'>Agronomía</option>
+              <option value='Almagro'>Almagro</option>
+              <option value='Balvanera'>Balvanera</option>
+              <option value='Barracas'>Barracas</option>
+              <option value='Belgrano'>Belgrano</option>
+              <option value='Boedo'>Boedo</option>
+              <option value='Caballito'>Caballito</option>
+              <option value='Chacarita'>Chacarita</option>
+              <option value='Coghlan'>Coghlan</option>
+              <option value='Colegiales'>Colegiales</option>
+              <option value='Constitución'>Constitución</option>
+              <option value='Flores'>Flores</option>
+              <option value='Floresta'>Floresta</option>
+              <option value='La Boca'>La Boca</option>
+              <option value='La Paternal'>La Paternal</option>
+              <option value='Liniers'>Liniers</option>
+              <option value='Mataderos'>Mataderos</option>
+              <option value='Montserrat'>Montserrat</option>
+              <option value='Monte Castro'>Monte Castro</option>
+              <option value='Nueva Pompeya'>Nueva Pompeya</option>
+              <option value='Núñez'>Núñez</option>
+              <option value='Palermo'>Palermo</option>
+              <option value='Parque Avellaneda'>Parque Avellaneda</option>
+              <option value='Parque Chacabuco'>Parque Chacabuco</option>
+              <option value='Parque Chas'>Parque Chas</option>
+              <option value='Parque Patricios'>Parque Patricios</option>
+              <option value='Puerto Madero'>Puerto Madero</option>
+              <option value='Recoleta'>Recoleta</option>
+              <option value='Retiro'>Retiro</option>
+              <option value='Saavedra'>Saavedra</option>
+              <option value='San Cristóbal'>San Cristóbal</option>
+              <option value='San Nicolás'>San Nicolás</option>
+              <option value='San Telmo'>San Telmo</option>
+              <option value='Vélez Sarsfield'>Vélez Sarsfield</option>
+              <option value='Versalles'>Versalles</option>
+              <option value='Villa Crespo'>Villa Crespo</option>
+              <option value='Villa del Parque'>Villa del Parque</option>
+              <option value='Villa Devoto'>Villa Devoto</option>
+              <option value='Villa Gral. Mitre'>Villa Gral. Mitre</option>
+              <option value='Villa Lugano'>Villa Lugano</option>
+              <option value='Villa Luro'>Villa Luro</option>
+              <option value='Villa Ortúzar'>Villa Ortúzar</option>
+              <option value='Villa Pueyrredón'>Villa Pueyrredón</option>
+              <option value='Villa Real'>Villa Real</option>
+              <option value='Villa Riachuelo'>Villa Riachuelo</option>
+              <option value='Villa Santa Rita'>Villa Santa Rita</option>
+              <option value='Villa Soldati'>Villa Soldati</option>
+              <option value='Villa Urquiza'>Villa Urquiza</option>
+            </select>
             {touched.localidad && errors.localidad && (
               <div className='flex flex-row-reverse w-[11.5rem] sm:w-[13.5rem] mt-5 text-red-500 text-xs sm:text-sm'>
                 {errors.localidad}
@@ -534,7 +610,6 @@ const FormRegister = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type='text'
-              required
               placeholder='Código Postal'
               className={`block w-44 h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.codigoPostal && errors.codigoPostal
@@ -566,7 +641,6 @@ const FormRegister = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               type='text'
-              required
               placeholder='Ejemplo: Bueno'
               className={`block w-44 h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.estado_refugio && errors.estado_refugio
@@ -597,14 +671,13 @@ const FormRegister = () => {
               name='whatsApp'
               onChange={handleChange}
               onBlur={handleBlur}
-              type='number'
-              required
-              placeholder='Télefono'
+              type='text' // Cambiado de "number" a "text"
+              placeholder='Teléfono'
               className={`block w-[31.5rem] h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
                 touched.whatsApp && errors.whatsApp
                   ? 'ring-red-500  focus:ring-red-500'
                   : 'ring-gray-300 placeholder-text-gray-400 focus:ring-indigo-600'
-              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+              } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 appearance-none`}
             />
             {touched.whatsApp && errors.whatsApp && (
               <div className='flex flex-row-reverse w-[11.5rem] sm:w-[13.5rem] mt-5 text-red-500 text-xs sm:text-sm'>

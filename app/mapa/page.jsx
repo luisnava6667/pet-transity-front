@@ -76,7 +76,7 @@ const Page = () => {
               {refugios.map((refugio) => (
                 <div key={refugio._id} className="bg-white rounded-lg flex">
                   <div>
-                    <Image src={refugio.img} width={200} height={200} />
+                    <Image src={refugio.img} width={200} height={200} alt="1" />
                   </div>
                   <div className="grid justify-items-center my-3">
                     <div className="grid">

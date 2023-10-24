@@ -44,7 +44,7 @@ const Form = () => {
         ),
       password2: Yup.string()
         .oneOf(
-          // [Yup.ref('password'), undefined],
+          [Yup.ref('password'), undefined],
           'Las contraseñas deben coincidir'
         )
         .required('contraseña requerida'),
@@ -52,8 +52,6 @@ const Form = () => {
       apellido: Yup.string().required('apellido requerido'),
       localidad: Yup.string().required('Campo requerido'),
       direccion: Yup.string().required('direccion requerida'),
-      piso: Yup.string().required('piso requerida'),
-      unidad: Yup.string().required('unidad requerida'),
       hogar: Yup.string().required('unidad requerida'),
       ambientes: Yup.number().required('unidad requerida'),
       patio_jardin: Yup.boolean().required('unidad requerida'),
@@ -61,17 +59,22 @@ const Form = () => {
       desc_mascotas: Yup.string().required('unidad requerida'),
       estado_domicilio: Yup.string().required('unidad requerida')
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log(values)
-
-      axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/usuarios`, values)
-        .then((res) => {
-          console.log(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+try {
+  const res = await axios.post(`${process.env.NEXT_PUBLIC_URL}/usuarios`, values)
+  console.log(res.data)
+} catch (error) {
+  console.log(error);
+}
+    //   axios
+    //     .post(`${process.env.NEXT_PUBLIC_URL}/usuarios`, values)
+    //     .then((res) => {
+    //       console.log(res.data)
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
     }
   })
 
@@ -93,7 +96,7 @@ const Form = () => {
         onSubmit={handleSubmit}>
         <p className='pb-10 underline underline-offset-2 text-[#6F4C48] text-2xl font-medium'>
           {' '}
-          Información de la cuenta
+          Cree su cuenta de PetTransity
         </p>
         <div className=''>
           <div className='flex gap-1 my-1'>

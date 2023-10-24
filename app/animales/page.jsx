@@ -1,11 +1,35 @@
-import usePet from "../hooks/usePet";
-import Sidebar from "../components/Sidebar";
+"use client";
+import React, { useEffect, useState } from "react";
 import TopBar from "../components/TopBar";
-import Image from "next/image";
+import Sidebar from "../components/Sidebar";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
 const Page = () => {
-  // const { animal } = usePet();
-  // console.log(animal);
+  const [pet, setPet] = useState([]);
+  const { data } = useSession();
+
+  console.log(pet);
+  useEffect(() => {
+    const getPets = async () => {
+      try {
+        const url = `${process.env.NEXT_PUBLIC_URL}/animales`;
+
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(response);
+        return setPet(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getPets();
+  }, [data]);
+
   return (
     <main className="min-h-full">
       <TopBar />
