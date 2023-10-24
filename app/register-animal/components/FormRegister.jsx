@@ -6,8 +6,19 @@ import name from "@/assets/name.svg";
 import mail from "@/assets/mail.svg";
 import lock from "@/assets/lock.svg";
 import Image from "next/image";
+import { SessionProvider, useSession } from "next-auth/react";
 
 const FormRegister = () => {
+  const { data } = useSession();
+  console.log(data.token);
+  // const token = localStorage.getItem("token");
+  // console.log(token);
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${data.token}`, // Asegúrate de tener el token en la variable "data"
+    },
+  };
   const formik = useFormik({
     initialValues: {
       especie: "",
@@ -46,7 +57,7 @@ const FormRegister = () => {
       console.log(values);
 
       axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/animales`, values)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/animales`, values, config)
         .then((res) => {
           console.log(res.data);
         })
