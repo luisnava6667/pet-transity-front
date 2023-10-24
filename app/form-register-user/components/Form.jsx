@@ -52,8 +52,6 @@ const Form = () => {
       apellido: Yup.string().required('apellido requerido'),
       localidad: Yup.string().required('Campo requerido'),
       direccion: Yup.string().required('direccion requerida'),
-      piso: Yup.string().required('piso requerida'),
-      unidad: Yup.string().required('unidad requerida'),
       hogar: Yup.string().required('unidad requerida'),
       ambientes: Yup.number().required('unidad requerida'),
       patio_jardin: Yup.boolean().required('unidad requerida'),
@@ -98,7 +96,7 @@ try {
         onSubmit={handleSubmit}>
         <p className='pb-10 underline underline-offset-2 text-[#6F4C48] text-2xl font-medium'>
           {' '}
-          Información de la cuenta
+          Cree su cuenta de PetTransity
         </p>
         <div className=''>
           <div className='flex gap-1 my-1'>

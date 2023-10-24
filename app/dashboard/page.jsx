@@ -20,6 +20,7 @@ const Page = () => {
         <TopBar />
         <div className='w-full flex flex-col items-center justify-center'>
           <div className='flex w-[65.4rem] gap-4 '>
+            
             <CardUsuarioDashboard />
             <InformacionCasaDashboard />
           </div>

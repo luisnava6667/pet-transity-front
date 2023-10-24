@@ -3,8 +3,11 @@ import usuarioFake from "../../assets/usuarioFake.svg";
 import ubicacionCard from "../../assets/ubicacionCard.svg";
 import telCard from "../../assets/telCard.svg";
 import huellaCard from "../../assets/huellaCard.svg";
+import { SessionProvider, useSession } from 'next-auth/react'
 
 const CardUsuarioDashboard = () => {
+   const { data } = useSession()
+   console.log(data);
   return (
     <>
       <div className="relative flex flex-col mt-7 ">

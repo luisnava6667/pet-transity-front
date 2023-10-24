@@ -39,7 +39,7 @@ const UserFormLogin = () => {
           setError(responseNextAuth.error)
           setTimeout(() => {
             setError(null)
-          }, 3000)
+          }, 5000)
           return
         }
         route.push('/dashboard')
@@ -140,7 +140,7 @@ const UserFormLogin = () => {
                 <a
                   href='#'
                   className='font-semibold underline text-[#6F4C48] hover:text-indigo-500'>
-                  ¿Olvido su contraseña?
+                  Olvidaste su contraseña?
                 </a>
               </div>
             </div>
