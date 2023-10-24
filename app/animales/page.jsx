@@ -4,18 +4,18 @@ import TopBar from "../components/TopBar";
 import Image from "next/image";
 
 const Page = () => {
-  const { animal } = usePet();
-  console.log(animal);
+  // const { animal } = usePet();
+  // console.log(animal);
   return (
     <main className="min-h-full">
       <TopBar />
       <div className="flex">
         <Sidebar />
         <div className="flex w-full">
-          <div className=" w-1/3 bg-[#CCC4BB]">
+          <div className=" w-1/3 bg-[#E6E2DD]">
             <div className="mb-24">
-              <h2 className="font-extrabold text-4xl pt-8 pl-7 mb-2 ">
-                Refugios
+              <h2 className="font-extrabold text-2xl pt-8 pl-7 mb-2 ">
+                Animales refugiados
               </h2>
               <p className="px-14 text-xl">
                 Encuentra un refugio cerca de tu zona, puedes solicitar hacer
