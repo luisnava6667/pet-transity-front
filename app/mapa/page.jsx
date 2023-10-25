@@ -1,110 +1,127 @@
-'use client'
-import React, { useEffect, useState } from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   GoogleMap,
   MarkerF,
   LoadScript,
   OverlayView,
-  InfoWindow
-} from '@react-google-maps/api'
-import useRefugio from '../hooks/useRefugio'
-import Sidebar from '../components/Sidebar'
-import TopBar from '../components/TopBar'
-import axios from 'axios'
-import Image from 'next/image'
+  InfoWindow,
+} from "@react-google-maps/api";
+import useRefugio from "../hooks/useRefugio";
+import Sidebar from "../components/Sidebar";
+import TopBar from "../components/TopBar";
+import axios from "axios";
+import Image from "next/image";
+import spinner from "@/assets/spinner.svg";
 
 const Page = () => {
-  const apiKey = `${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
-  const { refugios } = useRefugio()
-  const [locations, setLocations] = useState([])
+  const apiKey = `${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
+  const { refugios } = useRefugio();
+  console.log(refugios);
+  const [locations, setLocations] = useState([]);
+  const [mapVisibility, setMapVisibility] = useState("hidden");
+  const [spinnerVisibility, setSpinnerVisibility] = useState("flex");
   const direccion = refugios.map(
-    (refugio) => refugio.direccion + ',' + refugio.provincia
-  )
+    (refugio) => refugio.direccion + "," + refugio.provincia
+  );
   const mapStyles = {
-    height: '100%',
-    width: '100%'
-  }
+    height: "100%",
+    width: "100%",
+    display: mapVisibility,
+  };
   const mapOptions = {
     streetViewControl: false,
     mapTypeControl: false,
     fullscreenControl: false,
-    gestureHandling: 'cooperative'
-  }
+    gestureHandling: "cooperative",
+  };
   useEffect(() => {
     const addresstoGeometry = async (addresses) => {
       try {
         const promises = addresses.map(async (address) => {
           const response = await axios.get(
             `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
-          )
-          const location = response.data.results[0].geometry.location
-          return location
-        })
-        const resolvedLocations = await Promise.all(promises)
-        setLocations([...locations, ...resolvedLocations])
+          );
+          const location = response.data.results[0].geometry.location;
+          return location;
+        });
+        const resolvedLocations = await Promise.all(promises);
+        setLocations([...locations, ...resolvedLocations]);
+        setSpinnerVisibility("hidden");
+        setMapVisibility("flex");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
-    addresstoGeometry(direccion)
-  }, [refugios])
+    };
+    addresstoGeometry(direccion);
+  }, [refugios]);
 
   return (
-    <main className='min-h-full'>
+    <main className="min-h-full">
       <TopBar />
-      <div className='flex'>
+      <div className="flex">
         <Sidebar />
-        <div className='flex w-full'>
-          <div className=' w-1/3 bg-[#CCC4BB]'>
-            <div className='mb-24'>
-              <h2 className='font-extrabold text-4xl pt-8 pl-7 mb-2 '>
+        <div className="flex w-full">
+          <div className=" w-1/3 bg-[#CCC4BB]">
+            <div className="mb-24">
+              <h2 className="font-extrabold text-3xl pt-8 pl-7 mb-2 ">
                 Refugios
               </h2>
-              <p className='px-14 text-xl'>
+              <p className="px-7 text-sm">
                 Encuentra un refugio cerca de tu zona, puedes solicitar hacer
-                transito, adoptar un animal o colaborar con un donativo{' '}
+                transito, adoptar un animal o colaborar con un donativo{" "}
               </p>
             </div>
-            <div className='grid gap-5 pr-8 pl-4'>
+            <div className="grid gap-5 pr-8 pl-4">
               {refugios.map((refugio) => (
-                <div key={refugio._id} className='bg-white rounded-lg flex'>
+                <div key={refugio._id} className="bg-white rounded-lg flex">
                   <div>
-                    <Image src={refugio.img} width={200} height={200} alt='1'/>
+                    <Image src={refugio.img} width={200} height={200} alt="1" />
                   </div>
-                  <div className='grid justify-items-center my-3'>
-                    <div className='grid'>
-                      <h3 className='text-center text-xl mb-3 font-bold capitalize'>
+                  <div className="grid justify-items-center my-3">
+                    <div className="grid">
+                      <h3 className="text-center text-xl mb-3 font-bold capitalize">
                         {refugio.razon_social}
                       </h3>
-                      <p className='mb-7'>Refugio de animales dirigido por veterinarios.</p>
-                      <div className='mb-5'>
-
-                      <p>
-                        Direccion:{' '}
-                        {`${refugio.direccion}, ${refugio.provincia}`}
+                      <p className="mb-7">
+                        Refugio de animales dirigido por veterinarios.
                       </p>
-                      <p>Telefono: {refugio.whatsApp}</p>
+                      <div className="mb-5">
+                        <p>
+                          Direccion:{" "}
+                          {`${refugio.direccion}, ${refugio.provincia}`}
+                        </p>
+                        <p>Telefono: {refugio.whatsApp}</p>
                       </div>
                     </div>
-                    <div className='flex gap-5'>
-                      <button className='border-black border-2 px-4 rounded-lg font-bold'>
+                    <div className="flex gap-5">
+                      <button className="border-black border-2 rounded-lg w-[6.7rem] h-6 text-xs">
                         Ver ubicación
                       </button>
-                      <button>Contactar</button>
+                      <button className="bg-[#E59D1C] rounded-lg w-[6.7rem] h-6 text-xs">
+                        Contactar
+                      </button>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className=' w-2/3 h-screen'>
+          <div className=" w-2/3 h-screen">
+            <div
+              className={`${spinnerVisibility}  bg-[#CCC4BB] w-full flex justify-center min-h-screen`}
+            >
+              <Image src={spinner} />
+            </div>
             <LoadScript
-              googleMapsApiKey={`${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}>
+              googleMapsApiKey={`${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+            >
               <GoogleMap
                 mapContainerStyle={mapStyles}
                 zoom={13}
                 center={{ lat: -34.595369, lng: -58.436764 }}
-                options={mapOptions}>
+                options={mapOptions}
+              >
                 {locations.map((location, index) => (
                   <MarkerF key={index} position={location} />
                 ))}
@@ -125,7 +142,7 @@ const Page = () => {
         </div>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
