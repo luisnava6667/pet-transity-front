@@ -7,7 +7,7 @@ const PetContext = createContext()
 
 const PetProvider = ({ children }) => {
   const { data } = useSession()
-  // console.log(data.token)
+  // console.log(data?.token)
   const [pet, setPet] = useState([])
   console.log(pet)
   useEffect(() => {
@@ -16,7 +16,7 @@ const PetProvider = ({ children }) => {
         const config = {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${data.token}`
+            'Authorization': `Bearer ${data?.token}`
           }
         }
         const { data: pets } = await clienteAxios.get('/animales', config)

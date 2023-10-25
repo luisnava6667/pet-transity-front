@@ -17,7 +17,7 @@ const Page = () => {
 
         const response = await axios.get(url, {
           headers: {
-            'Authorization': `Bearer ${data.token}`,
+            'Authorization': `Bearer ${data?.token}`,
             'Content-Type': 'application/json'
           }
         })
