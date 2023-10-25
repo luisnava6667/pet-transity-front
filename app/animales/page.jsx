@@ -1,52 +1,52 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import TopBar from "../components/TopBar";
-import Sidebar from "../components/Sidebar";
-import { useSession } from "next-auth/react";
-import axios from "axios";
+'use client'
+import React, { useEffect, useState } from 'react'
+import TopBar from '../components/TopBar'
+import Sidebar from '../components/Sidebar'
+import { useSession } from 'next-auth/react'
+import axios from 'axios'
 
 const Page = () => {
-  const [pet, setPet] = useState([]);
-  const { data } = useSession();
+  const [pet, setPet] = useState([])
+  const { data } = useSession()
 
-  console.log(pet);
+  console.log(pet)
   useEffect(() => {
     const getPets = async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_URL}/animales`;
+        const url = `${process.env.NEXT_PUBLIC_URL}/animales`
 
         const response = await axios.get(url, {
           headers: {
-            Authorization: `Bearer ${data.token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        console.log(response);
-        return setPet(response.data);
+            'Authorization': `Bearer ${data.token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        console.log(response)
+        return setPet(response.data)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
-    getPets();
-  }, [data]);
+    }
+    getPets()
+  }, [data])
 
   return (
-    <main className="min-h-full">
-      <TopBar />
-      <div className="flex">
-        <Sidebar />
-        <div className="flex w-full">
-          <div className=" w-1/3 bg-[#E6E2DD]">
-            <div className="mb-24">
-              <h2 className="font-extrabold text-2xl pt-8 pl-7 mb-2 ">
+    <main className='flex h-full'>
+      <Sidebar />
+      <div className='flex h-screen flex-col w-full bg-[#CCC4BB]'>
+        <TopBar />
+        <div className='flex w-full'>
+          <div className=' w-1/3 bg-[#E6E2DD]'>
+            <div className='mb-24'>
+              <h2 className='font-extrabold text-2xl pt-8 pl-7 mb-2 '>
                 Animales refugiados
               </h2>
-              <p className="px-14 text-xl">
+              <p className='px-14 text-xl'>
                 Encuentra un refugio cerca de tu zona, puedes solicitar hacer
-                transito, adoptar un animal o colaborar con un donativo{" "}
+                transito, adoptar un animal o colaborar con un donativo{' '}
               </p>
             </div>
-            <div className="grid gap-5 pr-8 pl-4">
+            <div className='grid gap-5 pr-8 pl-4'>
               {/* {refugios.map((refugio) => (
                 <div key={refugio._id} className="bg-white rounded-lg flex">
                   <div>
@@ -79,17 +79,15 @@ const Page = () => {
               ))} */}
             </div>
           </div>
-          <div className=" w-2/3 h-screen">
-            <div
-              className={`  bg-[#CCC4BB] w-full flex justify-center min-h-screen`}
-            >
+          <div className=' w-2/3'>
+            <div className={`  bg-[#CCC4BB] w-full flex justify-center `}>
               {/* <Image src={spinner} /> */}
             </div>
           </div>
         </div>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

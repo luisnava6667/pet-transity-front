@@ -41,9 +41,7 @@ const CardUsuarioDashboard = ({ user }) => {
         </div>
 
         <div className='flex flex-col w-72 h-60 bg-[#E6E2DD] rounded-bl-2xl rounded-br-2xl items-center justify-center'>
-          <h2 className='w-48  mb-4 text-2xl font-medium'>
-            {nombre} {apellido}
-          </h2>
+          <h2 className='w-48  mb-4 text-2xl font-medium'>Marcos Fuentes</h2>
 
           <div className='flex w-48 gap-1 my-1'>
             <Image
@@ -70,7 +68,7 @@ const CardUsuarioDashboard = ({ user }) => {
               height={20}
             />
             <p className='text-base font-medium'>
-              {pets.length === 0 ? 'No posee mascotas' : 'Posee mascotas'}
+              {pets?.length === 0 ? 'No posee mascotas' : 'Posee mascotas'}
             </p>
           </div>
         </div>
