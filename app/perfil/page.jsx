@@ -15,7 +15,7 @@ const Page = () => {
         const url = `${process.env.NEXT_PUBLIC_URL}/usuarios/perfil`
         const response = await axios.get(url, {
           headers: {
-            'Authorization': `Bearer ${data?.token}`,
+            'Authorization': `Bearer ${data?.user.token}`,
             'Content-Type': 'application/json'
           }
         })

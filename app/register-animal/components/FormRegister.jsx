@@ -10,15 +10,7 @@ import { SessionProvider, useSession } from 'next-auth/react'
 
 const FormRegister = () => {
   const { data } = useSession()
-  // console.log(data?.token);
-  // const token = localStorage.getItem("token");
-  // console.log(token);
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${data?.token}` // Asegúrate de tener el token en la variable "data"
-    }
-  }
+
   const formik = useFormik({
     initialValues: {
       especie: '',
@@ -32,7 +24,7 @@ const FormRegister = () => {
       personalidad: '',
       observaciones: '',
       salud: '',
-      ingreso: ''
+      fecha_ingreso: ''
     },
     validationSchema: Yup.object({
       edad: Yup.number().required('edad requerida'),
@@ -46,24 +38,26 @@ const FormRegister = () => {
         .max(100, 'El campo no debe tener más de 100 caracteres')
         .required('salud requerida'),
       image: Yup.string().required('imagen es requerida'),
-      ingreso: Yup.date().required('ingreso requerido'),
+      fecha_ingreso: Yup.date().required('fecha_ingreso requerido'),
       estado: Yup.boolean().required('disponibilidad requerida'),
       observaciones: Yup.string().max(
         100,
         'El campo no debe tener más de 100 caracteres'
       )
     }),
-    onSubmit: (values) => {
-      console.log(values)
-
-      axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/animales`, values, config)
-        .then((res) => {
-          console.log(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    onSubmit: async (values) => {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${data?.user.token}` // Asegúrate de tener el token en la variable "data"
+        }
+      }
+      try {
+        const url = `${process.env.NEXT_PUBLIC_URL}/animales`
+        const resp = await axios.post(url, values, config)
+      } catch (error) {
+        console.log(error.response.data)
+      }
     }
   })
 
@@ -259,6 +253,7 @@ const FormRegister = () => {
             </div>
           </div>
           <div className='mt-2'>
+            {/* colocar un select */}
             <input
               id='tamaño'
               name='tamaño'
@@ -316,31 +311,31 @@ const FormRegister = () => {
         <div className='flex gap-6'>
           <div>
             <div className='flex gap-1  my-3'>
-              <Image alt='icono de etiqueta ingreso' src={name} />
+              <Image alt='icono de etiqueta fecha_ingreso' src={name} />
               <label
-                htmlFor='ingreso'
+                htmlFor='fecha_ingreso'
                 className='block text-sm font-semibold leading-6 text-gray-900'>
-                Ingreso <span className='text-red-600'>*</span>
+                fecha_ingreso <span className='text-red-600'>*</span>
               </label>
             </div>
             <div className='mt-2'>
               <input
-                id='ingreso'
-                name='ingreso'
+                id='fecha_ingreso'
+                name='fecha_ingreso'
                 onChange={handleChange}
                 onBlur={handleBlur}
                 type='date'
                 required
-                placeholder='Fecha de ingreso'
+                placeholder='Fecha de fecha_ingreso'
                 className={`block w-60 h-12 p-2 rounded-2xl py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ${
-                  touched.ingreso && errors.ingreso
+                  touched.fecha_ingreso && errors.fecha_ingreso
                     ? 'ring-red-500  focus:ring-red-500'
                     : 'ring-gray-300 placeholder-text-gray-400 focus:ring-indigo-600'
                 } focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
               />
-              {touched.ingreso && errors.ingreso && (
+              {touched.fecha_ingreso && errors.fecha_ingreso && (
                 <div className='flex flex-row-reverse w-[11.5rem] sm:w-[13.5rem] mt-5 text-red-500 text-xs sm:text-sm'>
-                  {errors.ingreso}
+                  {errors.fecha_ingreso}
                 </div>
               )}
             </div>

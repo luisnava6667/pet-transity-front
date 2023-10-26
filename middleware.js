@@ -8,6 +8,7 @@ export const config = {
     '/addPet',
     '/mapa',
     '/refugios',
-    '/viewPet'
+    '/viewPet',
+    '/perfil'
   ]
 }

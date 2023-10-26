@@ -59,9 +59,9 @@ const Donar = () => {
         {/* Volvemos al home */}
         <div className='flex justify-center'>
           <Link
-            href={data?.token ? '/dashboard' : '/'}
+            href={data?.user.token ? '/dashboard' : '/'}
             className='flex w-1/2 md:w-1/3 h-14 text-2xl items-center justify-center rounded-md bg-[#E59D1C] px-3 py-1.5 text-white font-semibold leading-6 shadow-sm '>
-            {data?.token ? 'Dashboard' : 'Home'}
+            {data?.user.token ? 'Dashboard' : 'Home'}
           </Link>
         </div>
       </div>

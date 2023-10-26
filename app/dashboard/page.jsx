@@ -13,14 +13,13 @@ const Page = () => {
   const [user, setUser] = useState([])
 
   const { data, status } = useSession()
-
   useEffect(() => {
     const userInfo = async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_URL}/usuarios/perfil`
+        const url = `${process.env.NEXT_PUBLIC_URL}/${data.credentials.refOrUser}/perfil`
         const response = await axios.get(url, {
           headers: {
-            'Authorization': `Bearer ${data?.token}`,
+            'Authorization': `Bearer ${data?.user.token}`,
             'Content-Type': 'application/json'
           }
         })

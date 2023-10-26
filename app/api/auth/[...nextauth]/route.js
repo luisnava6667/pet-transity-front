@@ -31,7 +31,7 @@ const handler = NextAuth({
           const error = user.msg
           throw new Error(error)
         }
-        return user
+        return { user, credentials }
       }
     })
   ],
