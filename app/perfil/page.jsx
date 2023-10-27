@@ -8,17 +8,18 @@ import axios from 'axios'
 const Page = () => {
   const [user, setUser] = useState([])
   const { data, status } = useSession()
-
+  console.log(data)
   useEffect(() => {
     const userInfo = async () => {
       try {
-        const url = `${process.env.NEXT_PUBLIC_URL}/usuarios/perfil`
+        const url = `${process.env.NEXT_PUBLIC_URL}/${data.credentials.refOrUser}/perfil`
         const response = await axios.get(url, {
           headers: {
             'Authorization': `Bearer ${data?.user.token}`,
             'Content-Type': 'application/json'
           }
         })
+        console.log(response.data)
         return setUser(response.data)
       } catch (error) {
         console.log(error)
@@ -37,7 +38,7 @@ const Page = () => {
         <TopBar />
         <div className='w-full flex flex-col items-center justify-center'>
           <div className='flex w-[65.4rem] gap-4 '>
-            <p>{user.email}</p>
+            <p>{user?.email}</p>
           </div>
         </div>
       </div>
