@@ -1,48 +1,50 @@
-import Image from 'next/image'
-import donarUsuario from '../../assets/donarUsuario.svg'
-import notificacion from '../../assets/notificacion.svg'
-import mensaje from '../../assets/mensaje.svg'
-import usuarioFake from '../../assets/usuarioFake.svg'
-import Link from 'next/link'
-import { useSession } from 'next-auth/react'
+import Image from "next/image";
+import donarBlack from "../../assets/donarblack.svg";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const TopBar = () => {
-  const { data } = useSession()
+  const { data } = useSession();
 
   return (
-    <div className='mx-auto w-full py-14 bg-[#6F4C48] flex h-20  items-center gap-8 px-4 sm:px-6 lg:px-8'>
-      <div className='flex flex-1 items-center justify-end md:justify-between'>
-        <p className='block text-white text-3xl font-medium' href='/'>
-          Usuario
-        </p>
-        <div className='flex  items-center gap-4'>
-          <div className='mx-12'>
-            <div className='flex gap-4 px-auto'>
-              <Link className='' href='/donar'>
-                <Image
-                  className=''
-                  width={26}
-                  height={24}
-                  alt='donar usuario'
-                  src={donarUsuario}
-                />
-              </Link>            
-            </div>
+    <div className="mx-auto w-full py-14 bg-[#6F4C48] flex h-20  items-center gap-8 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-1 items-center justify-end md:justify-between">
+        <div className="flex gap-4 px-auto">
+          <Link className="" href="/perfil">
+            <Image
+              className=""
+              width={50}
+              height={50}
+              alt="usuario"
+              src={data?.img}
+            />
+          </Link>
+          <div className="text-white">
+            <p>{data?.nombre}</p>
+            <p>Estado</p>
           </div>
-          <div className='flex gap-4 px-auto'>
-            <Link className='' href='/dashboard'>
+        </div>
+        <div className="text-center text-white">
+          <h1 className="text-2xl">Bienvenido a Pet Transity</h1>
+          <p className="text-sm">
+            Una aplicación para los amantes de los animales
+          </p>
+        </div>
+        <div className="flex  items-center gap-4">
+          <div className="sm:flex sm:gap-2 px-auto">
+            <Link
+              className="flex rounded-md bg-[#E59D1C] px-5 py-2.5 text-base justify-around font-medium text-black transition w-36 h-10 shadow-md"
+              href="/donar"
+            >
               <Image
-                className=''
-                width={50}
-                height={50}
-                alt='usuarioFake'
-                src={data?.img}
+                className=""
+                width={20}
+                height={20}
+                alt="logo"
+                src={donarBlack}
               />
+              Donar
             </Link>
-            <div className='text-white'>
-              <p>{data?.nombre}</p>
-              <p>Estado</p>
-            </div>
           </div>
 
           {/*    <button className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden">
@@ -65,7 +67,7 @@ const TopBar = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TopBar
+export default TopBar;
